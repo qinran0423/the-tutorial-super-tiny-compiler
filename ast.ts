@@ -23,15 +23,18 @@ export type ChildNode = NumberNode | CallExpressionNode
 
 export interface RootNode extends Node {
   body: ChildNode[]
+  type: NodeType.Root
 }
 
 export interface NumberNode extends Node {
   value: string
+  type: NodeType.Number
 }
 
 export interface CallExpressionNode extends Node {
   name: string
   params: ChildNode[]
+  type: NodeType.CallExpression
 }
 
 export function createRootNode(): RootNode {
