@@ -65,10 +65,8 @@ export function parser(tokens: Token[]) {
       token = tokens[++current]
 
       while (!(token.type === TokenTypes.Paren && token.value === ")")) {
-        if (token.type === TokenTypes.Number) {
-          node.params.push(walk())
-          token = tokens[current]
-        }
+        node.params.push(walk())
+        token = tokens[current]
       }
 
       current++
