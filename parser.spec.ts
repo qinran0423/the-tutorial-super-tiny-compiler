@@ -1,7 +1,6 @@
 import { expect, test } from "vitest"
-import { NodeType, parser } from "./parser"
-import { TokenTypes } from "./tokenizer"
-
+import { NodeType, TokenTypes } from "./ast"
+import { parser } from "./parser"
 test("tokenizer", () => {
   const tokens = [
     { type: TokenTypes.Paren, value: "(" },
