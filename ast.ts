@@ -10,9 +10,9 @@ export interface Token {
 }
 
 export enum NodeType {
-  Root,
-  Number,
-  CallExpression
+  Root = "Root",
+  Number = "Number",
+  CallExpression = "CallExpression"
 }
 
 export interface Node {
