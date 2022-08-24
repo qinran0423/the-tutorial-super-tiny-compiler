@@ -2,6 +2,7 @@ import {
   createCallExpression,
   createNumberNode,
   createRootNode,
+  createStringNode,
   Token,
   TokenTypes
 } from "./ast"
@@ -15,6 +16,11 @@ export function parser(tokens: Token[]) {
     if (token.type === TokenTypes.Number) {
       current++
       return createNumberNode(token.value)
+    }
+
+    if (token.type === TokenTypes.String) {
+      current++
+      return createStringNode(token.value)
     }
 
     if (token.type === TokenTypes.Paren && token.value === "(") {

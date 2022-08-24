@@ -68,6 +68,22 @@ test("number", () => {
   expect(parser(tokens)).toEqual(ast)
 })
 
+test("name", () => {
+  const tokens = [{ type: TokenTypes.String, value: "hello" }]
+
+  const ast = {
+    type: NodeType.Root,
+    body: [
+      {
+        type: NodeType.String,
+        value: "hello"
+      }
+    ]
+  }
+
+  expect(parser(tokens)).toEqual(ast)
+})
+
 test("CallExpression", () => {
   const tokens = [
     { type: TokenTypes.Paren, value: "(" },

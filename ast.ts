@@ -1,7 +1,8 @@
 export enum TokenTypes {
   Paren,
   Name,
-  Number
+  Number,
+  String
 }
 
 export interface Token {
@@ -12,14 +13,15 @@ export interface Token {
 export enum NodeType {
   Root = "Root",
   Number = "Number",
-  CallExpression = "CallExpression"
+  CallExpression = "CallExpression",
+  String = "String"
 }
 
 export interface Node {
   type: NodeType
 }
 
-export type ChildNode = NumberNode | CallExpressionNode
+export type ChildNode = NumberNode | CallExpressionNode | StringNode
 
 export interface RootNode extends Node {
   body: ChildNode[]
@@ -29,6 +31,11 @@ export interface RootNode extends Node {
 export interface NumberNode extends Node {
   value: string
   type: NodeType.Number
+}
+
+export interface StringNode extends Node {
+  value: string
+  type: NodeType.String
 }
 
 export interface CallExpressionNode extends Node {
@@ -56,5 +63,12 @@ export function createCallExpression(name: string): CallExpressionNode {
     type: NodeType.CallExpression,
     name,
     params: []
+  }
+}
+
+export function createStringNode(value: string): StringNode {
+  return {
+    type: NodeType.String,
+    value
   }
 }
