@@ -15,14 +15,14 @@ test("tokenizer", () => {
   ]
 
   const ast = {
-    type: NodeType.Root,
+    type: NodeType.Program,
     body: [
       {
         type: NodeType.CallExpression,
         name: "add",
         params: [
           {
-            type: NodeType.Number,
+            type: NodeType.NumberLiteral,
             value: "2"
           },
           {
@@ -30,11 +30,11 @@ test("tokenizer", () => {
             name: "subtract",
             params: [
               {
-                type: NodeType.Number,
+                type: NodeType.NumberLiteral,
                 value: "4"
               },
               {
-                type: NodeType.Number,
+                type: NodeType.NumberLiteral,
                 value: "2"
               }
             ]
@@ -56,10 +56,10 @@ test("number", () => {
   ]
 
   const ast = {
-    type: NodeType.Root,
+    type: NodeType.Program,
     body: [
       {
-        type: NodeType.Number,
+        type: NodeType.NumberLiteral,
         value: "2"
       }
     ]
@@ -72,10 +72,10 @@ test("name", () => {
   const tokens = [{ type: TokenTypes.String, value: "hello" }]
 
   const ast = {
-    type: NodeType.Root,
+    type: NodeType.Program,
     body: [
       {
-        type: NodeType.String,
+        type: NodeType.StringLiteralNode,
         value: "hello"
       }
     ]
@@ -94,18 +94,18 @@ test("CallExpression", () => {
   ]
 
   const ast = {
-    type: NodeType.Root,
+    type: NodeType.Program,
     body: [
       {
         type: NodeType.CallExpression,
         name: "add",
         params: [
           {
-            type: NodeType.Number,
+            type: NodeType.NumberLiteral,
             value: "2"
           },
           {
-            type: NodeType.Number,
+            type: NodeType.NumberLiteral,
             value: "4"
           }
         ]
@@ -131,18 +131,18 @@ test("two CallExpression", () => {
   ]
 
   const ast = {
-    type: NodeType.Root,
+    type: NodeType.Program,
     body: [
       {
         type: NodeType.CallExpression,
         name: "add",
         params: [
           {
-            type: NodeType.Number,
+            type: NodeType.NumberLiteral,
             value: "2"
           },
           {
-            type: NodeType.Number,
+            type: NodeType.NumberLiteral,
             value: "4"
           }
         ]
@@ -152,11 +152,11 @@ test("two CallExpression", () => {
         name: "add",
         params: [
           {
-            type: NodeType.Number,
+            type: NodeType.NumberLiteral,
             value: "3"
           },
           {
-            type: NodeType.Number,
+            type: NodeType.NumberLiteral,
             value: "5"
           }
         ]

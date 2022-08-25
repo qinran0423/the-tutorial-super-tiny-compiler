@@ -1,50 +1,45 @@
-import { ChildNode, NodeType, RootNode } from "./ast"
+import { CallExpressionNode, ChildNode, NodeType, RootNode } from "./ast"
+
+type ParentNode = RootNode | CallExpressionNode | undefined
+type MethodFn = (node: RootNode | ChildNode, parent: ParentNode) => void
 
 interface VisitorOption {
-  enter(node: RootNode | ChildNode, parent: RootNode | ChildNode | undefined)
-  exit(node: RootNode | ChildNode, parent: RootNode | ChildNode | undefined)
+  enter: MethodFn
+  exit?: MethodFn
 }
 
 export interface Visitor {
-  Root?: VisitorOption
+  Program?: VisitorOption
   CallExpression?: VisitorOption
-  Number?: VisitorOption
+  NumberLiteral?: VisitorOption
 }
 
 export function traverser(rootNode: RootNode, visitor: Visitor) {
-  // 1. 深度优先搜索
-
-  function traverseArray(
-    array: ChildNode[],
-    parent: RootNode | ChildNode | undefined
-  ) {
+  function traverseArray(array: ChildNode[], parent: ParentNode) {
     array.forEach((node) => {
       traverseNode(node, parent)
     })
   }
 
-  function traverseNode(
-    node: ChildNode | RootNode,
-    parent?: ChildNode | RootNode
-  ) {
+  function traverseNode(node: ChildNode | RootNode, parent?: ParentNode) {
     const visitorObj = visitor[node.type]
 
     if (visitorObj) {
       visitorObj.enter(node, parent)
     }
     switch (node.type) {
-      case NodeType.Number:
+      case NodeType.NumberLiteral:
         // console.log("number", node)
         break
       case NodeType.CallExpression:
         traverseArray(node.params, node)
         break
-      case NodeType.Root:
+      case NodeType.Program:
         traverseArray(node.body, node)
         break
     }
 
-    if (visitorObj) {
+    if (visitorObj && visitorObj.exit) {
       visitorObj.exit(node, parent)
     }
   }

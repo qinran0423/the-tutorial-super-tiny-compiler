@@ -4,14 +4,14 @@ import { traverser, Visitor } from "./traverser"
 
 test("traverse", () => {
   const ast: RootNode = {
-    type: NodeType.Root,
+    type: NodeType.Program,
     body: [
       {
         type: NodeType.CallExpression,
         name: "add",
         params: [
           {
-            type: NodeType.Number,
+            type: NodeType.NumberLiteral,
             value: "2"
           },
           {
@@ -19,11 +19,11 @@ test("traverse", () => {
             name: "subtract",
             params: [
               {
-                type: NodeType.Number,
+                type: NodeType.NumberLiteral,
                 value: "4"
               },
               {
-                type: NodeType.Number,
+                type: NodeType.NumberLiteral,
                 value: "2"
               }
             ]
@@ -36,7 +36,7 @@ test("traverse", () => {
   const callArr: any = []
 
   const visitor: Visitor = {
-    Root: {
+    Program: {
       enter(node, parent) {
         callArr.push(["root-enter", node.type, ""])
       },
@@ -52,7 +52,7 @@ test("traverse", () => {
         callArr.push(["callexpression-exit", node.type, parent!.type])
       }
     },
-    Number: {
+    NumberLiteral: {
       enter(node, parent) {
         callArr.push(["number-enter", node.type, parent!.type])
       },
@@ -65,17 +65,17 @@ test("traverse", () => {
   traverser(ast, visitor)
 
   expect(callArr).toEqual([
-    ["root-enter", NodeType.Root, ""],
-    ["callexpression-enter", NodeType.CallExpression, NodeType.Root],
-    ["number-enter", NodeType.Number, NodeType.CallExpression],
-    ["number-exit", NodeType.Number, NodeType.CallExpression],
+    ["root-enter", NodeType.Program, ""],
+    ["callexpression-enter", NodeType.CallExpression, NodeType.Program],
+    ["number-enter", NodeType.NumberLiteral, NodeType.CallExpression],
+    ["number-exit", NodeType.NumberLiteral, NodeType.CallExpression],
     ["callexpression-enter", NodeType.CallExpression, NodeType.CallExpression],
-    ["number-enter", NodeType.Number, NodeType.CallExpression],
-    ["number-exit", NodeType.Number, NodeType.CallExpression],
-    ["number-enter", NodeType.Number, NodeType.CallExpression],
-    ["number-exit", NodeType.Number, NodeType.CallExpression],
+    ["number-enter", NodeType.NumberLiteral, NodeType.CallExpression],
+    ["number-exit", NodeType.NumberLiteral, NodeType.CallExpression],
+    ["number-enter", NodeType.NumberLiteral, NodeType.CallExpression],
+    ["number-exit", NodeType.NumberLiteral, NodeType.CallExpression],
     ["callexpression-exit", NodeType.CallExpression, NodeType.CallExpression],
-    ["callexpression-exit", NodeType.CallExpression, NodeType.Root],
-    ["root-exit", NodeType.Root, ""]
+    ["callexpression-exit", NodeType.CallExpression, NodeType.Program],
+    ["root-exit", NodeType.Program, ""]
   ])
 })

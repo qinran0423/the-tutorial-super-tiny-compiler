@@ -1,6 +1,6 @@
 import {
   createCallExpression,
-  createNumberNode,
+  createNumberLiteralNodeNode,
   createRootNode,
   createStringNode,
   Token,
@@ -15,7 +15,7 @@ export function parser(tokens: Token[]) {
     let token = tokens[current]
     if (token.type === TokenTypes.Number) {
       current++
-      return createNumberNode(token.value)
+      return createNumberLiteralNodeNode(token.value)
     }
 
     if (token.type === TokenTypes.String) {

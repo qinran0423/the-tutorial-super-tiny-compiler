@@ -11,49 +11,62 @@ export interface Token {
 }
 
 export enum NodeType {
-  Root = "Root",
-  Number = "Number",
+  Program = "Program",
+  ExpressionStatement = "ExpressionStatement",
+  NumberLiteral = "NumberLiteral",
   CallExpression = "CallExpression",
-  String = "String"
+  StringLiteralNode = "StringLiteralNode"
 }
 
 export interface Node {
   type: NodeType
 }
 
-export type ChildNode = NumberNode | CallExpressionNode | StringNode
+export type ChildNode = NumberLiteralNode | CallExpressionNode | StringNode
 
 export interface RootNode extends Node {
   body: ChildNode[]
-  type: NodeType.Root
+  type: NodeType.Program
+  context?: ChildNode[]
 }
 
-export interface NumberNode extends Node {
+export interface NumberLiteralNode extends Node {
   value: string
-  type: NodeType.Number
+  type: NodeType.NumberLiteral
 }
 
 export interface StringNode extends Node {
   value: string
-  type: NodeType.String
+  type: NodeType.StringLiteralNode
 }
 
 export interface CallExpressionNode extends Node {
   name: string
   params: ChildNode[]
   type: NodeType.CallExpression
+  context?: CallExpressionAst[]
+}
+
+interface Callee {
+  type: string
+  name: string
+}
+
+export interface CallExpressionAst extends Node {
+  callee: Callee
+  argument: []
 }
 
 export function createRootNode(): RootNode {
   return {
-    type: NodeType.Root,
+    type: NodeType.Program,
     body: []
   }
 }
 
-export function createNumberNode(value: string): NumberNode {
+export function createNumberLiteralNodeNode(value: string): NumberLiteralNode {
   return {
-    type: NodeType.Number,
+    type: NodeType.NumberLiteral,
     value
   }
 }
@@ -68,7 +81,7 @@ export function createCallExpression(name: string): CallExpressionNode {
 
 export function createStringNode(value: string): StringNode {
   return {
-    type: NodeType.String,
+    type: NodeType.StringLiteralNode,
     value
   }
 }
